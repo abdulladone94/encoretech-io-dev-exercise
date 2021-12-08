@@ -1,43 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import SearchAppBar from "./SearchBar";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  // Route,
-  Link,
-  // useRouteMatch,
-  // useParams,
-} from "react-router-dom";
+import { setAllData } from "./store/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function App() {
-  const [fetchData, setFetchData] = useState("");
+  const dispatch = useDispatch();
+  const allItems = useSelector((state) => state.data.allItems);
 
   useEffect(() => {
     axios.get("http://jsonplaceholder.typicode.com/posts").then((response) => {
-      setFetchData(response.data);
+      dispatch(setAllData(response.data));
     });
-  }, []);
-  if (!fetchData) return null;
+  }, [dispatch]);
 
   return (
-    <Router>
-      <div>
-        <SearchAppBar />
-        {fetchData.map((card) => {
-          return (
-            <div className="note">
-              <h1>
-                {card.id + ".   "}
-                {card.title}
-              </h1>
-              <p>{card.body}</p>
-              <Link>View More</Link>
-            </div>
-          );
-        })}
-      </div>
-    </Router>
+    <div>
+      <SearchAppBar />
+      {allItems.map((card) => {
+        return (
+          <div className="note">
+            <h1>
+              {card.id + ". "}
+              {card.title}
+            </h1>
+            <p>{card.body}</p>
+          </div>
+        );
+      })}
+    </div>
   );
 }
