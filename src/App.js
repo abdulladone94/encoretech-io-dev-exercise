@@ -18,7 +18,7 @@ export default function App() {
       <SearchAppBar />
       {fetchData.map((card) => {
         return (
-          <div>
+          <div className="note">
             <h1>
               {card.id + ".   "}
               {card.title}
