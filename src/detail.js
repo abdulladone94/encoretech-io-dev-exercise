@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./App.css";
+import { Link } from "react-router-dom";
 
 const DetailView = () => {
   const { id } = useParams();
@@ -32,6 +33,8 @@ const DetailView = () => {
         <h1>Card id: {id}</h1>
         <h1>Name: {fetchUser.name}</h1>
         <p>Title: {user.title}</p>
+        <br />
+        <Link to="/">Back To Home</Link>
       </div>
     </div>
   );
